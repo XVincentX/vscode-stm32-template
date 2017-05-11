@@ -35,6 +35,14 @@
       "isBackground": true,
       "command": "st-util",
       "dependsOn": ["Flash program on device"]
+    },
+    {
+      "taskName": "Erase program on device",
+      "command": "st-flash",
+      "isShellCommand": true,
+      "args": [
+        "erase"
+      ]
     }
   ]
 }
