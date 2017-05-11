@@ -1,0 +1,29 @@
+{
+  "version": "0.1.0",
+  "tasks": [
+    {
+      "isBuildCommand": true,
+      "taskName": "make",
+      "command": "make",
+      "isShellCommand": true,
+      "showOutput": "always"
+    }, {
+      "taskName": "flash",
+      "command": "st-flash",
+      "isShellCommand": true,
+      "args": [
+        "--format", "ihex",
+        "write", "./build/iar_empty.hex"
+      ]
+    },{
+      "isBuildCommand": true,
+      "taskName": "clean",
+      "command": "make",
+      "args": [
+        "clean"
+      ],
+      "isShellCommand": true,
+      "showOutput": "always"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C++ Attach",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceRoot}/build/iar_empty.elf",
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/local/bin/arm-none-eabi-gdb",
+      "miDebuggerServerAddress": "localhost:4242",
+      "cwd": "."
+    }
+  ]
+}
