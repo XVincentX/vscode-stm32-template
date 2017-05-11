@@ -5,7 +5,7 @@
       "name": "C++ Attach",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceRoot}/build/iar_empty.elf",
+      "program": "${workspaceRoot}/build/program.elf",
       "MIMode": "gdb",
       "miDebuggerPath": "/usr/local/bin/arm-none-eabi-gdb",
       "miDebuggerServerAddress": "localhost:4242",

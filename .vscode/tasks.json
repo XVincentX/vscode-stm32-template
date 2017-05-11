@@ -13,7 +13,7 @@
       "isShellCommand": true,
       "args": [
         "--format", "ihex",
-        "write", "./build/iar_empty.hex"
+        "write", "./build/program.hex"
       ]
     },{
       "isBuildCommand": true,
