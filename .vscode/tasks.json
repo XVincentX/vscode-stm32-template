@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "isBuildCommand": true,
+      "isBuildCommand": false,
       "taskName": "Compile",
       "command": "make",
       "isShellCommand": true,
@@ -11,6 +11,7 @@
     {
       "taskName": "Flash program on device",
       "command": "st-flash",
+      "isBuildCommand": true,
       "isShellCommand": true,
       "dependsOn": "Compile",
       "args": [
