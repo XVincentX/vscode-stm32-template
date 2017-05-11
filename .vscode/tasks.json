@@ -1,29 +1,40 @@
 {
-  "version": "0.1.0",
+  "version": "2.0.0",
   "tasks": [
     {
       "isBuildCommand": true,
-      "taskName": "make",
+      "taskName": "Compile",
       "command": "make",
       "isShellCommand": true,
       "showOutput": "always"
-    }, {
-      "taskName": "flash",
+    },
+    {
+      "taskName": "Flash program on device",
       "command": "st-flash",
       "isShellCommand": true,
+      "dependsOn": "Compile",
       "args": [
-        "--format", "ihex",
-        "write", "./build/program.hex"
+        "--format",
+        "ihex",
+        "write",
+        "./build/program.hex"
       ]
-    },{
+    },
+    {
       "isBuildCommand": true,
-      "taskName": "clean",
+      "taskName": "Clean build files",
       "command": "make",
       "args": [
         "clean"
       ],
       "isShellCommand": true,
       "showOutput": "always"
+    },
+    {
+      "taskName": "Launch GDB server",
+      "isBackground": true,
+      "command": "st-util",
+      "dependsOn": ["Flash program on device"]
     }
   ]
 }
