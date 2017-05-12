@@ -54,7 +54,7 @@ Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_i2c.c
 
 # ASM sources
 ASM_SOURCES =  \
-startup_stm32f334x8.s
+startup_stm32f303xc.s
 
 
 ######################################
@@ -131,7 +131,7 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)"
 # LDFLAGS
 #######################################
 # link script
-LDSCRIPT = STM32F334C8Tx_FLASH.ld
+LDSCRIPT = STM32F303VCTx_FLASH.ld
 
 # libraries
 LIBS = -lc -lm -lnosys
