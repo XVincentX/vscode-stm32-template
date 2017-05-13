@@ -1,6 +1,8 @@
 # vscode-stm32-template
 Visual Studio Code template project for STM32 boards
 
+![image](image.png)
+
 I've been lately involved into embedded programming (nothing really serious
 and fancy, just basic stuff for an university exam), in particular with ST
 microdevices.
