@@ -56,6 +56,9 @@ int main(void)
       {
         TIM2->ARR = TIM2->ARR / 2;
         TIM2->CR1 &= ~TIM_CR1_CEN;
+
+        if (TIM2->ARR < 3000)
+          TIM2->ARR = 4000000;
       }
     }
   }
