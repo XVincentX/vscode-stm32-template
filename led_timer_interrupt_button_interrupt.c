@@ -41,7 +41,7 @@ int main(void)
   NVIC->ISER[0] |= 1 << 29; // Timer
   NVIC->ISER[0] |= 1 << 6;  // User button
 
-  SYSCFG->EXTICR[1] &= ~7;
+  SYSCFG->EXTICR[1] = 0;
   EXTI->IMR |= EXTI_IMR_MR0;
   EXTI->RTSR = EXTI_RTSR_TR0;
 
