@@ -1,21 +1,13 @@
 #include "stm32f3xx.h"
 
+float res = 0.0f;
+
 int main(void)
 {
-  RCC->AHBENR |= RCC_AHBENR_ADC12EN | RCC_AHBENR_GPIOAEN | RCC_AHBENR_GPIOEEN;
+  RCC->AHBENR |= RCC_AHBENR_ADC12EN | RCC_AHBENR_GPIOAEN;
   GPIOA->MODER |= GPIO_MODER_MODER0;
 
-  GPIOE->MODER = 1 << 18 |
-                 1 << 16 |
-                 1 << 20 |
-                 1 << 30 |
-                 1 << 22 |
-                 1 << 28 |
-                 1 << 24 |
-                 1 << 26;
-
-
-  ADC1->CR &= ADC_CR_ADVREGEN_1;
+  ADC1->CR &= ~ADC_CR_ADVREGEN_1;
   ADC1->CR |= ADC_CR_ADVREGEN_0;
 
   for (int i = 0; i < 1000; i++)
@@ -35,12 +27,10 @@ int main(void)
 
   ADC1->CFGR |= ADC_CFGR_CONT;
   ADC1->SQR1 = ADC_SQR1_SQ1_0;
-  ADC1->SQR1 |= ~ADC_SQR1_L;
+  ADC1->SQR1 &= ~ADC_SQR1_L;
   ADC1->SMPR1 |= ADC_SMPR1_SMP1;
 
   ADC1->CR |= ADC_CR_ADSTART;
-
-  float res = 0.0f;
 
   while (1)
   {
@@ -48,10 +38,7 @@ int main(void)
       ;
 
     res = ADC1->DR * (3.0f / 4096.0f);
-
-    if (res > 1) {
-      GPIOE->ODR = 1 << 8;
-    }
-
+    
+    printf("Res is: %f", res);
   }
 }
