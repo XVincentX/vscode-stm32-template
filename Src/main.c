@@ -2,31 +2,56 @@
 
 int main(void)
 {
-  RCC->AHBENR = RCC_AHBENR_GPIOAEN | RCC_AHBENR_GPIOEEN;                                        // Clock on GPIOE and A
-  GPIOE->MODER = 1 << 18 | 1 << 16 | 1 << 20 | 1 << 30 | 1 << 22 | 1 << 28 | 1 << 24 | 1 << 26; //Set port 8,6,7,9 to input
-  GPIOA->MODER &= ~GPIO_MODER_MODER0;                                                           // Set port 0 as input
+  RCC->AHBENR |= RCC_AHBENR_ADC12EN | RCC_AHBENR_GPIOAEN | RCC_AHBENR_GPIOEEN;
+  GPIOA->MODER |= GPIO_MODER_MODER0;
 
-  const unsigned int leds[] = {
-      1 << 9,
-      1 << 8,
-      1 << 10,
-      1 << 15,
-      1 << 11,
-      1 << 14,
-      1 << 12,
-      1 << 13,
-  };
+  GPIOE->MODER = 1 << 18 |
+                 1 << 16 |
+                 1 << 20 |
+                 1 << 30 |
+                 1 << 22 |
+                 1 << 28 |
+                 1 << 24 |
+                 1 << 26;
 
-  unsigned int index = 0;
+
+  ADC1->CR &= ADC_CR_ADVREGEN_1;
+  ADC1->CR |= ADC_CR_ADVREGEN_0;
+
+  for (int i = 0; i < 1000; i++)
+    ;
+
+  ADC1_2_COMMON->CCR |= ADC12_CCR_CKMODE_0;
+
+  ADC1->CR |= ADC_CR_ADCAL;
+
+  while ((ADC1->CR & ADC_CR_ADCAL) == ADC_CR_ADCAL)
+    ;
+
+  ADC1->CR |= ADC_CR_ADEN;
+
+  while ((ADC1->ISR & ADC_ISR_ADRD) == ADC_ISR_ADRD)
+    ;
+
+  ADC1->CFGR |= ADC_CFGR_CONT;
+  ADC1->SQR1 = ADC_SQR1_SQ1_0;
+  ADC1->SQR1 |= ~ADC_SQR1_L;
+  ADC1->SMPR1 |= ADC_SMPR1_SMP1;
+
+  ADC1->CR |= ADC_CR_ADSTART;
+
+  float res = 0.0f;
 
   while (1)
   {
-    if (GPIOA->IDR & GPIO_IDR_0)
-    {
-      GPIOE->ODR = leds[index % 8];
-      while (GPIOA->IDR & GPIO_IDR_0)
-        ;
-      index++;
+    while ((ADC1->ISR & ADC_ISR_EOC) != ADC_ISR_EOC)
+      ;
+
+    res = ADC1->DR * (3.0f / 4096.0f);
+
+    if (res > 1.0f) {
+      GPIOE->ODR = 1 << 8;
     }
+
   }
 }
